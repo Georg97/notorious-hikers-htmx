@@ -30,6 +30,3 @@ jobs:
 
     - name: Build
       run: go build .
-        asset_path: ./notorious-hikers-htmx
-        asset_name: notorious-hikers-htmx
-        asset_content_type: application/octet-stream
