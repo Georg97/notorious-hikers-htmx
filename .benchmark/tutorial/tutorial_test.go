@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"io"
 	"testing"
 )
 
@@ -13,6 +14,10 @@ func writeBuffer(msg []byte) {
     buf.Write(msg)
 }
 
+func writeBufferTakeBuffer(w io.Writer, msg []byte) {
+    w.Write(msg)
+}
+
 func BenchmarkBuffer(b *testing.B) {
     n := 100
 
@@ -21,6 +26,17 @@ func BenchmarkBuffer(b *testing.B) {
         for i := 0; i < b.N; i++ {
             for i := 0; i < n; i++ {
                 writeBuffer(msg)
+            }
+        }
+    })
+
+    b.Run("pass buffer-writer", func(b *testing.B) {
+        msg := []byte("Hello, World")
+        for i := 0; i < b.N; i++ {
+            var buf bytes.Buffer
+            for i := 0; i < n; i++ {
+                writeBufferTakeBuffer(&buf, msg)
+                buf.Reset()
             }
         }
     })
