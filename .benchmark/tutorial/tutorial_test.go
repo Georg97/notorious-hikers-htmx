@@ -7,7 +7,7 @@ import (
 // Questions
 // what does b.N do?
 
-func BenchmarkNoAlloc(b *testing.B) {
+func BenchmarkAlloc(b *testing.B) {
     n := 100
     // outside of bench
     for i := 0; i < b.N; i++ {
@@ -20,9 +20,15 @@ func BenchmarkNoAlloc(b *testing.B) {
     }
 }
 
-// func BenchmarkAlloc(b *testing.B) {
-//     // outside of bench
-//     for i := 0; i < b.N; i++ {
-//         // bench code
-//     }
-// }
+func BenchmarkNoAlloc(b *testing.B) {
+    n := 100
+    // outside of bench
+    for i := 0; i < b.N; i++ {
+        // bench code
+        // fmt.Printf("Hello, World")
+        ints := make([]int, n)
+        for i := 0; i < n; i++ {
+            ints[i] = i
+        }
+    }
+}
